@@ -29,14 +29,18 @@ namespace AdventProject
             int SafeReports = 0;
             foreach (var report in listOfReports)
             {
-                
-                if(IsProperAscending(report) || IsProperDescending(report))
+                if (IsProperAscending(report) || IsProperDescending(report))
+                {
+                    SafeReports += 1;
+                }
+                else if (Dampener(report))
                 {
                     SafeReports += 1;
                 }
             }
+            
 
-            Console.WriteLine($"Day 2 Problem 1: {SafeReports}");
+            Console.WriteLine($"Day 2 Problem 2: {SafeReports}");
         }
 
         public bool IsProperAscending(List<int> report)
@@ -56,6 +60,7 @@ namespace AdventProject
           
             return true;
         }
+
         public bool IsProperDescending(List<int> report)
         {
             for (int i = 0; i < report.Count - 1; i++)
@@ -71,6 +76,22 @@ namespace AdventProject
             }
 
             return true;
+        }
+        public bool Dampener (List<int> report)
+        {
+            for (int i = 0; i < report.Count; i++)
+            {
+                var tempList = new List<int>(report);
+
+                tempList.RemoveAt(i);
+                
+                if (IsProperAscending (tempList) || IsProperDescending(tempList))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }
